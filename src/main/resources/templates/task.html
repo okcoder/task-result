@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+                    <label th:text="${ti.event.eventId}"/><br/>
+                    <label th:text="${ti.event.eventName}"/>
+            <table border="1">
+                <tr>
+                    <th>No</th>
+                    <th>fieldId</th>
+                    <th>fieldName</th>
+                    <th>fieldType</th>
+                    <th>displayName</th>
+                    <th>go</th>
+                </tr>
+                <tr th:each="row, loop : *{ti.fields}">
+                    <th th:text="${loop.count}"></th>
+                    <th th:text="${row.fieldId}"></th>
+                    <th th:text="${row.fieldName}"></th>
+                    <th th:text="${row.fieldType}"></th>
+                    <th th:text="${row.displayName}"></th>
+                </tr>
+            </table>
+</body>
+</html>

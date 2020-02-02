@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+            <table border="1">
+                <tr>
+                    <th>No</th>
+                    <th>eventId</th>
+                    <th>event Name</th>
+                    <th>taskId</th>
+                    <th>scheduledDate</th>
+                </tr>
+                <tr th:each="row, loop : *{tasks}">
+                    <th>
+                    	<a th:href="@{/task/{eventId}/{taskId}(eventId=${row.event.eventId},taskId=${row.task.taskId})}"  th:text="${loop.count}"></a>
+                    </th>
+                    <th th:text="${row.event.eventId}"></th>
+                    <th th:text="${row.event.eventName}"></th>
+                    <th th:text="${row.task.taskId}"></th>
+                    <th th:text="${row.task.scheduledDate}"></th>
+                </tr>
+            </table>
+</body>
+</html>

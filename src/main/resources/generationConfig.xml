@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="PostgresTables" targetRuntime="MyBatis3" defaultModelType="flat">
+
+	<property name="nullCatalogMeansCurrent" value="true" />
+
+  <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">  
+            <property name="searchString" value="Example$"/> 
+            <property name="replaceString" value="Condition"/> 
+   </plugin>
+   
+    <!-- スキーマ情報を取得する DB への接続設定 -->
+    <jdbcConnection driverClass="org.h2.Driver"
+        connectionURL="jdbc:h2:mem:;INIT=RUNSCRIPT FROM '/Users/okcoder/Documents/workspace-spring-tool-suite-4-4.3.1.RELEASE/task-result/src/main/resources/schema.sql'"
+        userId="sa"
+        password="">
+    </jdbcConnection>
+
+    <javaTypeResolver>
+      <property name="useJSR310Types" value="true" />
+	</javaTypeResolver>
+
+    <!-- SELECT 結果等を格納するドメインモデルを生成する設定 -->
+    <javaModelGenerator targetPackage="org.okcoder.app.task_result.domain.entity" targetProject="task-result/src/main/java">
+      <property name="enableSubPackages" value="false" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+    <!-- SQL 設定が記述された XML を生成する設定 -->
+    <sqlMapGenerator targetPackage="org.okcoder.app.task_result.domain.mapper" targetProject="task-result/src/main/resources">
+      <property name="enableSubPackages" value="false" />
+    </sqlMapGenerator>
+    <!-- マッパークラスを生成する設定 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="org.okcoder.app.task_result.domain.mapper" targetProject="task-result/src/main/java">
+      <property name="enableSubPackages" value="false" />
+    </javaClientGenerator>
+
+
+
+    <!-- コードを生成するテーブルを指定 -->
+    <table tableName="Event%">
+      <property name="useActualColumnNames" value="false" />
+    </table>
+    <table tableName="Field%">
+      <property name="useActualColumnNames" value="false" />
+    </table>
+    <table tableName="Task%">
+      <property name="useActualColumnNames" value="false" />
+    </table>
+
+   
+  </context>
+</generatorConfiguration>
