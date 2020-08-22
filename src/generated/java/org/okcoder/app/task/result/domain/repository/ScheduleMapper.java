@@ -35,7 +35,7 @@ import org.okcoder.app.task.result.domain.entity.Schedule;
 @Mapper
 public interface ScheduleMapper {
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source Table: PUBLIC.SCHEDULE")
-    BasicColumn[] selectList = BasicColumn.columnList(id, userId, repeatType, name, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, userId, repeatType, name, startDay, finishDay, priorityType, priorityIndex, estimatePrepareTime, estimateTime, estimateCloseTime, createTime, updateTime);
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source Table: PUBLIC.SCHEDULE")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -61,10 +61,17 @@ public interface ScheduleMapper {
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source Table: PUBLIC.SCHEDULE")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @Results(id="ScheduleResult", value = {
-        @Result(column="ID", property="id", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="ID", property="id", jdbcType=JdbcType.VARCHAR, id=true),
         @Result(column="USER_ID", property="userId", jdbcType=JdbcType.VARCHAR),
         @Result(column="REPEAT_TYPE", property="repeatType", jdbcType=JdbcType.VARCHAR),
         @Result(column="NAME", property="name", jdbcType=JdbcType.VARCHAR),
+        @Result(column="START_DAY", property="startDay", jdbcType=JdbcType.DATE),
+        @Result(column="FINISH_DAY", property="finishDay", jdbcType=JdbcType.DATE),
+        @Result(column="PRIORITY_TYPE", property="priorityType", jdbcType=JdbcType.VARCHAR),
+        @Result(column="PRIORITY_INDEX", property="priorityIndex", jdbcType=JdbcType.INTEGER),
+        @Result(column="ESTIMATE_PREPARE_TIME", property="estimatePrepareTime", jdbcType=JdbcType.INTEGER),
+        @Result(column="ESTIMATE_TIME", property="estimateTime", jdbcType=JdbcType.INTEGER),
+        @Result(column="ESTIMATE_CLOSE_TIME", property="estimateCloseTime", jdbcType=JdbcType.INTEGER),
         @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="UPDATE_TIME", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
@@ -85,7 +92,7 @@ public interface ScheduleMapper {
     }
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source Table: PUBLIC.SCHEDULE")
-    default int deleteByPrimaryKey(Integer id_) {
+    default int deleteByPrimaryKey(String id_) {
         return delete(c -> 
             c.where(id, isEqualTo(id_))
         );
@@ -108,6 +115,13 @@ public interface ScheduleMapper {
             .map(userId).toProperty("userId")
             .map(repeatType).toProperty("repeatType")
             .map(name).toProperty("name")
+            .map(startDay).toProperty("startDay")
+            .map(finishDay).toProperty("finishDay")
+            .map(priorityType).toProperty("priorityType")
+            .map(priorityIndex).toProperty("priorityIndex")
+            .map(estimatePrepareTime).toProperty("estimatePrepareTime")
+            .map(estimateTime).toProperty("estimateTime")
+            .map(estimateCloseTime).toProperty("estimateCloseTime")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
         );
@@ -120,6 +134,13 @@ public interface ScheduleMapper {
             .map(userId).toProperty("userId")
             .map(repeatType).toProperty("repeatType")
             .map(name).toProperty("name")
+            .map(startDay).toProperty("startDay")
+            .map(finishDay).toProperty("finishDay")
+            .map(priorityType).toProperty("priorityType")
+            .map(priorityIndex).toProperty("priorityIndex")
+            .map(estimatePrepareTime).toProperty("estimatePrepareTime")
+            .map(estimateTime).toProperty("estimateTime")
+            .map(estimateCloseTime).toProperty("estimateCloseTime")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
         );
@@ -132,6 +153,13 @@ public interface ScheduleMapper {
             .map(userId).toPropertyWhenPresent("userId", record::getUserId)
             .map(repeatType).toPropertyWhenPresent("repeatType", record::getRepeatType)
             .map(name).toPropertyWhenPresent("name", record::getName)
+            .map(startDay).toPropertyWhenPresent("startDay", record::getStartDay)
+            .map(finishDay).toPropertyWhenPresent("finishDay", record::getFinishDay)
+            .map(priorityType).toPropertyWhenPresent("priorityType", record::getPriorityType)
+            .map(priorityIndex).toPropertyWhenPresent("priorityIndex", record::getPriorityIndex)
+            .map(estimatePrepareTime).toPropertyWhenPresent("estimatePrepareTime", record::getEstimatePrepareTime)
+            .map(estimateTime).toPropertyWhenPresent("estimateTime", record::getEstimateTime)
+            .map(estimateCloseTime).toPropertyWhenPresent("estimateCloseTime", record::getEstimateCloseTime)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
         );
@@ -153,7 +181,7 @@ public interface ScheduleMapper {
     }
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source Table: PUBLIC.SCHEDULE")
-    default Optional<Schedule> selectByPrimaryKey(Integer id_) {
+    default Optional<Schedule> selectByPrimaryKey(String id_) {
         return selectOne(c ->
             c.where(id, isEqualTo(id_))
         );
@@ -170,6 +198,13 @@ public interface ScheduleMapper {
                 .set(userId).equalTo(record::getUserId)
                 .set(repeatType).equalTo(record::getRepeatType)
                 .set(name).equalTo(record::getName)
+                .set(startDay).equalTo(record::getStartDay)
+                .set(finishDay).equalTo(record::getFinishDay)
+                .set(priorityType).equalTo(record::getPriorityType)
+                .set(priorityIndex).equalTo(record::getPriorityIndex)
+                .set(estimatePrepareTime).equalTo(record::getEstimatePrepareTime)
+                .set(estimateTime).equalTo(record::getEstimateTime)
+                .set(estimateCloseTime).equalTo(record::getEstimateCloseTime)
                 .set(createTime).equalTo(record::getCreateTime)
                 .set(updateTime).equalTo(record::getUpdateTime);
     }
@@ -180,6 +215,13 @@ public interface ScheduleMapper {
                 .set(userId).equalToWhenPresent(record::getUserId)
                 .set(repeatType).equalToWhenPresent(record::getRepeatType)
                 .set(name).equalToWhenPresent(record::getName)
+                .set(startDay).equalToWhenPresent(record::getStartDay)
+                .set(finishDay).equalToWhenPresent(record::getFinishDay)
+                .set(priorityType).equalToWhenPresent(record::getPriorityType)
+                .set(priorityIndex).equalToWhenPresent(record::getPriorityIndex)
+                .set(estimatePrepareTime).equalToWhenPresent(record::getEstimatePrepareTime)
+                .set(estimateTime).equalToWhenPresent(record::getEstimateTime)
+                .set(estimateCloseTime).equalToWhenPresent(record::getEstimateCloseTime)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime);
     }
@@ -190,6 +232,13 @@ public interface ScheduleMapper {
             c.set(userId).equalTo(record::getUserId)
             .set(repeatType).equalTo(record::getRepeatType)
             .set(name).equalTo(record::getName)
+            .set(startDay).equalTo(record::getStartDay)
+            .set(finishDay).equalTo(record::getFinishDay)
+            .set(priorityType).equalTo(record::getPriorityType)
+            .set(priorityIndex).equalTo(record::getPriorityIndex)
+            .set(estimatePrepareTime).equalTo(record::getEstimatePrepareTime)
+            .set(estimateTime).equalTo(record::getEstimateTime)
+            .set(estimateCloseTime).equalTo(record::getEstimateCloseTime)
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))
@@ -202,6 +251,13 @@ public interface ScheduleMapper {
             c.set(userId).equalToWhenPresent(record::getUserId)
             .set(repeatType).equalToWhenPresent(record::getRepeatType)
             .set(name).equalToWhenPresent(record::getName)
+            .set(startDay).equalToWhenPresent(record::getStartDay)
+            .set(finishDay).equalToWhenPresent(record::getFinishDay)
+            .set(priorityType).equalToWhenPresent(record::getPriorityType)
+            .set(priorityIndex).equalToWhenPresent(record::getPriorityIndex)
+            .set(estimatePrepareTime).equalToWhenPresent(record::getEstimatePrepareTime)
+            .set(estimateTime).equalToWhenPresent(record::getEstimateTime)
+            .set(estimateCloseTime).equalToWhenPresent(record::getEstimateCloseTime)
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))

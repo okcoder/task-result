@@ -1,0 +1,107 @@
+body {
+	/*box-sizing: content-box;*/
+	/*
+	color:  https://color.adobe.com/ja/Farbdesign-3-color-theme-9720744/edit/?copy=true
+	flex: https://www.webcreatorbox.com/tech/flexbox/
+		http://coliss.com/articles/build-websites/operation/css/css3-flexbox-properties-by-scotch.html
+	*/
+	display: flex;
+	flex-direction:column;
+	height: 98vh;
+}
+header {
+	color: #FFC700;
+	height: 2em;
+}
+body>*{
+	border: 0.1em solid #FF7900;
+}
+div.contents{
+	display: flex;
+	flex-direction1:row;
+	flex:1;
+	background-color:#FF7900;
+}
+div.contents>nav{
+	padding:0.1em;
+	overflow: hidden;
+	width:2em;
+}
+div.contents>nav:HOVER{
+	width:10em;
+}
+div.contents>nav li{
+	white-space: nowrap;
+	overflow: hidden;
+}
+div.contents>article{
+	background-color:white;
+	flex:1;
+}
+.detail {
+	display: flex;
+	flex-wrap: wrap;
+}
+.detail.flat{
+  flex-direction:column;
+}
+.detail dl {
+	height: 2em;
+	border: 0.1em dashed #FF7900;
+	margin: 0.2em;
+	display: flex;
+}
+.detail dl dt {
+	background-color: #FFC700;
+	width: 5em;
+	height: 100%;
+	display:flex;
+	align-items: center;
+}
+.detail dl dd {
+	width: 20em;
+	margin-left: 0.2em;
+	display:flex;
+	align-items: center;
+}
+
+input:not ([type=button]) {
+	height: 1.5em;
+	font-size: 1em;
+}
+
+input.calendar {
+	width: 6em;
+}
+input.hasDatepicker {
+	ime-mode: disabled;
+}
+select{
+	ime-mode: disabled;
+}
+
+input[type=number] {
+	ime-mode: disabled;
+	width: 6em;
+}
+input[type=button]{
+	margin: 0em 0.2em;
+}
+input:invalid {
+  border: 1px solid red;
+}
+tr.jqgrow td.number {
+	text-align: right;
+	padding-right: 5px;
+}
+
+.ui-state-disabled{
+	opacity: 0.80 !important;
+}
+.ui-state-disabled input{
+	opacity: 0.35 !important;
+}
+input[readonly="readonly"] {
+	border:1px solid #e3e3e3;
+    background:#eee;
+}

@@ -1,0 +1,104 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+  		<th:block th:replace="common/header :: header_fragment(title = 'summary')"></th:block>
+
+<style type="text/css">
+<!--
+dl.accounts {height: 3em;}
+dl.accounts dd{width:100%;flex-wrap:wrap;}
+dl.accounts span{white-space: nowrap;}
+-->
+</style>
+<script type="text/javascript">
+	$(function() {
+		jQuery('#list').jqGrid({
+			datatype : 'local',
+			colModel : [ {label : '種別',name : 'type',width : 55,editable : false
+			}, {label : '摘要',name : 'explanation',width : 295,editable : false
+			}, {label : '日期',name : 'operationDate',width : 75,editable : false
+			}, {label : '残高',name : 'balance',width : 80,formatter : "integer",classes : "number",editable : false
+			}
+			]
+			,footerrow : true
+			,height : '490px'
+		});//end of jQuery('#list').jqGrid({
+
+		$("[name=account]:eq(0)").prop("checked",true);
+		$("#txtCloseDay").val($("[name=day]:checked").val());
+		$("#btnSearch").trigger("click");
+	});
+
+	$(document).on("change", "#txtCloseDay", function(e) {
+		$("[name=day]:last").val($("#txtCloseDay").val());
+		$("[name=day]:last").prop("checked",true);
+		$("#btnSearch").trigger("click");
+	});
+	
+	$(document).on("change", "#reportForm input", function(e) {
+		$("#btnSearch").trigger("click");
+	});
+	$(document).on("click", "#btnSearch", function(e) {
+		var data = {
+			day:$("[name=day]:checked").val()
+		};
+		var options = {
+			type : "POST",
+			url : "summary/",
+			data : JSON.stringify(data),
+			dataType : "json",
+			contentType : "application/json; charset=utf-8",
+			success : function(data) {
+				jQuery("#list").clearGridData();
+				jQuery('#list').addRows(data);
+				var footer={explanation:"合計",balance:0};
+				data.forEach(function(row){footer.balance+=row.balance;});
+				jQuery('#list').jqGrid('footerData', 'set', footer);
+			}//end of success
+			,error : function(data) {
+				alert("error:" + JSON.stringify(data));
+			}//end of error
+		};
+		$.ajax(options);
+	});//end of $(document).on("click","#btnSearch",function(){
+
+</script>
+
+
+
+    </head>
+    <body>
+
+	<header>口座明細</header>
+	<div class="contents">
+	
+  <nav th:replace="common/menu :: menu_fragment"></nav>
+  
+		<article class="main">
+			<form id="reportForm">
+				<section class="detail">
+					<dl>
+						<dt>締日</dt>
+						<dd>
+<span>
+</span>
+						</dd>
+					</dl>
+					<dl>
+						<dt>操作</dt>
+						<dd>
+							<input type="button" id="btnSearch" value="検索" />
+						</dd>
+					</dl>
+				</section>
+			</form>
+			<section>
+				<table id="list" class="scroll"></table>
+			</section>
+		</article>
+	</div>
+	<footer>footer</footer>
+</body>
+
+    </body>
+</html>

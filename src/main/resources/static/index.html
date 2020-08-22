@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="refresh" content="0;url=summary/" />
+<title>money manager</title>
+<script src="https://code.jquery.com/jquery-1.12.4.js"
+	integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+	crossorigin="anonymous"></script>
+<script type="text/javascript">
+$(function(){
+	$(document).on("click","#ajax",function(){
+		var data = {id:$("#id").val(),name:$("#name").val()};
+		var options ={
+				type:"POST"
+				,url:"home/ajax"
+				,data:JSON.stringify(data)
+				,dataType:"json"
+				,contentType: "application/json; charset=utf-8"
+				,success:function(data){
+					alert("success:"+JSON.stringify(data));
+				}//end of success
+				,error:function(data){
+					alert("error:"+JSON.stringify(data));
+				}//end of error
+			};
+		$.ajax(options);
+	});//end of $(document).on("#ajax","click",function(){
+});
+</script>
+</head>
+<body>hello!
+<br/>
+id  :<input type="text" id="id"><br/>
+name:<input type="text" id="name"><br/>
+<input type="button" value="ajax" id="ajax">
+</body>
+</html>

@@ -1,0 +1,30 @@
+<nav xmlns:th="http://www.thymeleaf.org" th:fragment="menu_fragment" >
+
+<ul id="menu">
+	<li><a href="#">&nbsp;Menu</a></li>
+	<li><a href="summary/"><span class="ui-icon ui-icon-home"></span>Home</a></li>
+	<li class="ui-state-disabled">マスタ管理</li>
+	<li><a href="master/spendInfo/"><span class="ui-icon ui-icon-search"></span>消費類別管理</a></li>
+	<li><a href="master/goods/"><span class="ui-icon ui-icon-search"></span>物品管理</a></li>
+	<li><a href="#"><span class="ui-icon ui-icon-search"></span>账户管理</a></li>
+	<li><a href="tools/"><span class="ui-icon ui-icon-search"></span>系统工具</a></li>
+	<li><a href="payment/"><span class="ui-icon ui-icon-search"></span>消費明細検索</a></li>
+	<li><a href="payment/detail"><span class="ui-icon ui-icon-plus"></span>消費明細登録</a></li>
+	<li class="ui-state-disabled">データ登録</li>
+	<li><a href="income/"><span class="ui-icon ui-icon-search"></span>収入登録</a></li>
+	<li><a href="transfer/"><span class="ui-icon ui-icon-search"></span>貯金関連登録</a></li>
+	<li><a href="#"><span class="ui-icon ui-icon-search"></span>信用卡对账</a></li>
+	<li><a href="accountStatement/import"><span class="ui-icon ui-icon-search"></span>账单读取</a></li>
+	<li><a href="accountStatement/matching"><span class="ui-icon ui-icon-search"></span>自动对账</a></li>
+	<li class="ui-state-disabled">統計照会</li>
+	<li><a href="report/paymentDetail"><span class="ui-icon ui-icon-search"></span>消費明細照会</a></li>
+	<li><a href="report/monthly"><span class="ui-icon ui-icon-search"></span>月別合計照会</a></li>
+	<li><a href="report/accountDetail"><span class="ui-icon ui-icon-search"></span>口座明細照会</a></li>
+</ul>
+<script type="text/javascript">
+	$(function() {
+		$("#menu").menu();
+	});
+</script>
+
+</nav>
