@@ -1,46 +1,148 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-  		<th:block th:replace="common/header :: header_fragment(title = 'summary')"></th:block>
-
+<head>
+<th:block
+	th:replace="common/header :: header_fragment(title = 'summary')"></th:block>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
 <style type="text/css">
 <!--
-dl.accounts {height: 3em;}
-dl.accounts dd{width:100%;flex-wrap:wrap;}
-dl.accounts span{white-space: nowrap;}
+dl.accounts {
+	height: 3em;
+}
+
+dl.accounts dd {
+	width: 100%;
+	flex-wrap: wrap;
+}
+
+dl.accounts span {
+	white-space: nowrap;
+}
+
+.task ul {
+	list-style: none;
+}
+
+.task ul li {
+	width: 20%;
+	border-color: red;
+	border-style: dotted;
+	float: left;
+	display: flex;
+	flex-wrap:wrap;
+}
+.task ul li div{
+	border-color: blue;
+	border-style: dashed;
+	margin: 2px;
+    flex-basis: 25%;
+}
+.task ul li div.title{
+	border-color: yellow;
+	border-style: solid;
+    flex-basis: 100%;
+}
+.task ul li div.moving{
+	border-color: green;
+}
+
 -->
 </style>
 <script type="text/javascript">
-	$(function() {
-		jQuery('#list').jqGrid({
-			datatype : 'local',
-			colModel : [ {label : '種別',name : 'type',width : 55,editable : false
-			}, {label : '摘要',name : 'explanation',width : 295,editable : false
-			}, {label : '日期',name : 'operationDate',width : 75,editable : false
-			}, {label : '残高',name : 'balance',width : 80,formatter : "integer",classes : "number",editable : false
-			}
-			]
-			,footerrow : true
-			,height : '490px'
-		});//end of jQuery('#list').jqGrid({
 
-		$("[name=account]:eq(0)").prop("checked",true);
-		$("#txtCloseDay").val($("[name=day]:checked").val());
-		$("#btnSearch").trigger("click");
-	});
+$(function() {
+	 
+    $(".item").draggable({
+
+      // ドラッグ開始時
+      start : function (event , ui){
+        var target = document.getElementById(this.id);
+        target.style.zIndex=100;
+        if (target.style.order==""){
+        	$(".item").each(function(idx,e){
+        		e.style.order=idx;
+        	});	
+        }
+      },
+      drag:function(event,ui){
+			$(".moving").removeClass("moving");
+    	  var height=$(this).outerHeight(true);
+    	  var width=$(this).outerWidth(true);
+    	  var currentOrder = parseInt(this.style.order);
+    	  var info =$(".item")
+      	.map(function(idx,e){
+            return {
+          	  offsetLeft: e.offsetLeft,
+          	  offsetTop:  e.offsetTop,
+          	  name: e.id,
+          	  order:parseInt(e.style.order)
+            };
+    	});	
+    	info.sort(function(a,b){return a.order - b.order});
+
+    	var step = getStep(ui,this);
+
+    	if(step!=0){
+       		for(let i = currentOrder+step;i>=0 && i<info.length;i+=step){
+    			var tmp = info[i];
+    			if ((this.offsetTop - tmp.offsetTop)*step>height/2 ||
+    					(this.offsetLeft - tmp.offsetLeft)*step>width/2){
+    				$("#"+tmp.name).addClass("moving");
+    			}else{
+    				break;
+    			}
+       		}    		
+    	}
+      },
+
+      // ドラッグ終了時
+      stop : function (event , ui){
+    	  var step = getStep(ui,this);
+    	  $(".moving").each(function(i,e){
+    		  e.style.order = parseInt(e.style.order)-step;
+    	  });
+    	  this.style.order = parseInt(this.style.order) + $(".moving").size()*step;
+    	  this.style.left=0;
+    	  this.style.top=0;
+          $(".moving").removeClass("moving");
+      }
+
+    });
+
+    function getStep(ui,target){
+  	  var height = $(target).outerHeight(true);
+	  var width = $(target).outerWidth(true);
+    	var step=0;
+    	if (ui.position.top<-height/2){
+    		step=-1;
+    	}else if (ui.position.top>height/2){
+    		step=1;
+    	}else{
+        	if (ui.position.left<-width/2){
+        		step=-1;
+        	}else if (ui.position.left>width/2){
+        		step=1;
+        	}else{
+        		step=0;
+        	}
+    	}
+    	return step;
+    }
+});
+
 
 	$(document).on("change", "#txtCloseDay", function(e) {
 		$("[name=day]:last").val($("#txtCloseDay").val());
-		$("[name=day]:last").prop("checked",true);
+		$("[name=day]:last").prop("checked", true);
 		$("#btnSearch").trigger("click");
 	});
-	
+
 	$(document).on("change", "#reportForm input", function(e) {
 		$("#btnSearch").trigger("click");
 	});
 	$(document).on("click", "#btnSearch", function(e) {
 		var data = {
-			day:$("[name=day]:checked").val()
+			day : $("[name=day]:checked").val()
 		};
 		var options = {
 			type : "POST",
@@ -51,37 +153,41 @@ dl.accounts span{white-space: nowrap;}
 			success : function(data) {
 				jQuery("#list").clearGridData();
 				jQuery('#list').addRows(data);
-				var footer={explanation:"合計",balance:0};
-				data.forEach(function(row){footer.balance+=row.balance;});
+				var footer = {
+					explanation : "合計",
+					balance : 0
+				};
+				data.forEach(function(row) {
+					footer.balance += row.balance;
+				});
 				jQuery('#list').jqGrid('footerData', 'set', footer);
 			}//end of success
-			,error : function(data) {
+			,
+			error : function(data) {
 				alert("error:" + JSON.stringify(data));
 			}//end of error
 		};
 		$.ajax(options);
 	});//end of $(document).on("click","#btnSearch",function(){
-
 </script>
 
 
 
-    </head>
-    <body>
+</head>
+<body>
 
 	<header>口座明細</header>
 	<div class="contents">
-	
-  <nav th:replace="common/menu :: menu_fragment"></nav>
-  
+
+		<nav th:replace="common/menu :: menu_fragment"></nav>
+
 		<article class="main">
 			<form id="reportForm">
 				<section class="detail">
 					<dl>
 						<dt>締日</dt>
 						<dd>
-<span>
-</span>
+							<span> </span>
 						</dd>
 					</dl>
 					<dl>
@@ -92,13 +198,29 @@ dl.accounts span{white-space: nowrap;}
 					</dl>
 				</section>
 			</form>
-			<section>
-				<table id="list" class="scroll"></table>
+			<section class="task">
+
+				<ul>
+					<li><div class="title">a</div>
+						<div id="item0" class="item droppable">a0</div>
+						<div id="item1" class="item droppable">a1</div>
+						<div id="item2" class="item droppable">a2</div>
+						<div id="item3" class="item droppable">a3</div>
+						<div id="item4" class="item droppable">a4</div>
+						<div id="item5" class="item droppable">a5</div>
+						<div id="item6" class="item droppable">a6</div>
+					</li>
+					<li>b</li>
+					<li>c</li>
+					<li>d</li>
+				</ul>
+
+
 			</section>
 		</article>
 	</div>
 	<footer>footer</footer>
 </body>
 
-    </body>
+</body>
 </html>
