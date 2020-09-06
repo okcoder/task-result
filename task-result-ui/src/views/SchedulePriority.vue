@@ -1,35 +1,35 @@
 <template>
-  <div>
-    <template v-for="(schedules,priorityType) in priorityTypes">
-      <div v-bind:key="priorityType" v-bind:class="priorityType">
-        {{priorityType}}:
-        <template class="item" v-for="item in schedules">{{item.name}}</template>
-        <br />
-      </div>
-    </template>
-    <hr />
-    <template v-for="(schedules,priorityType) in priorityTypes">
-      <div v-bind:key="priorityType" v-bind:class="priorityType">
-        {{priorityType}}
-        <draggable :options="options" group="myGroup" :list="schedules">
-          <div class="item" v-for="item in schedules" :key="item.id">{{item.name}}</div>
-        </draggable>
-        <hr />
-      </div>
-    </template>
-  </div>
+  <el-row class="priority_type">
+    <el-col
+      :span="5"
+      :key="priorityType"
+      :class="priorityType"
+      v-for="(schedules,priorityType) in priorityTypes"
+    >
+      <div class="priority_title">{{priorityType}}</div>
+      <draggable :options="options" group="priorityTypes" :list="schedules">
+        <el-card class="box-card" v-for="schedule in schedules" :key="schedule.id" shadow="hover">
+          <div slot="header" class="clearfix">
+            <span>{{schedule.name}}</span>
+          </div>
+          <div>estimatePrepareTime: {{Math.floor(schedule.estimatePrepareTime/60)}}:{{schedule.estimatePrepareTime%60}}</div>
+          <div>estimateTime: {{Math.floor(schedule.estimateTime/60)}}:{{schedule.estimateTime%60}}</div>
+          <div>estimateCloseTime: {{Math.floor(schedule.estimateCloseTime/60)}}:{{schedule.estimateCloseTime%60}}</div>
+        </el-card>
+      </draggable>
+    </el-col>
+  </el-row>
 </template>
 <script>
 import axios from "axios";
 import draggable from "vuedraggable";
-//import Vue from "vue";
 
 export default {
   components: { draggable },
   data() {
     return {
       options: {
-        group: "myGroup",
+        group: "priorityTypes",
         animation: 200,
       },
       schedules: [],
@@ -65,3 +65,31 @@ export default {
   },
 };
 </script>
+<style scoped>
+.priority_title {
+  height: 100px;
+  width: 100%;
+}
+.big_rock .priority_title {
+  background: url("../assets/big_rock.png") no-repeat center center;
+}
+.gravel .priority_title {
+  background: url("../assets/gravel.png") no-repeat center center;
+}
+.sand .priority_title {
+  background: url("../assets/sand.png") no-repeat center center;
+}
+.water .priority_title {
+  background: url("../assets/water.png") no-repeat center center;
+}
+.box-card {
+  margin: 5px;
+}
+
+.priority_type .el-col {
+  border-width: 2px;
+  border-style: dotted;
+  min-height: 100px;
+  margin: 5px;
+}
+</style>
