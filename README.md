@@ -50,6 +50,12 @@ install axios
  npm install axios --save
 ```
 
+install vuedraggable
+
+```bash
+npm install vuedraggable --save
+```
+
 npm install sass-loader
 npm install sass
 
