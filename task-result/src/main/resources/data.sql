@@ -1,10 +1,14 @@
 
 INSERT INTO schedule (id, user_id, repeat_type, name, start_day, finish_day, priority_type, priority_index, estimate_prepare_time, estimate_time, estimate_close_time, create_time, update_time) values 
  (1, 'wxs', 'weekly', 'SAPIX 国語音読', DATE '1900-01-01', DATE '2900-01-01', 'gravel', 0, 1, 10, 1,  TIMESTAMP '2020-08-15 00:00:00.000', null)
-,(2, 'wxs', 'weekly', 'Daily SAPIX 算数', DATE '1900-01-01', DATE '2900-01-01', 'big-rock', 0,  1, 10, 1,  TIMESTAMP '2020-08-15 00:00:00.000', null)
-,(3, 'wxs', 'weekly', 'YAMAHA',        DATE '1900-01-01', DATE '2900-01-01', 'big-rock', 0,  1, 10, 1,  TIMESTAMP '2020-08-15 00:00:00.000', null)
-,(4, 'wxs', 'weekly', 'WiiSports',        DATE '1900-01-01', DATE '2900-01-01', 'sand', 0,  1, 10, 1,  TIMESTAMP '2020-08-15 00:00:00.000', null)
-,(5, 'wxs', 'weekly', 'ポケモンTV',        DATE '1900-01-01', DATE '2900-01-01', 'water', 0,  1, 10, 1,  TIMESTAMP '2020-08-15 00:00:00.000', null)
+,(2, 'wxs', 'weekly', 'Daily 算数', DATE '1900-01-01', DATE '2900-01-01', 'big_rock', 0,  1, 10, 1,  TIMESTAMP '2020-08-15 00:00:00.000', null)
+,(3, 'wxs', 'weekly', 'Daily 理科', DATE '1900-01-01', DATE '2900-01-01', 'big_rock', 0,  1, 10, 1,  TIMESTAMP '2020-08-15 00:00:00.000', null)
+,(4, 'wxs', 'weekly', 'Daily 国語', DATE '1900-01-01', DATE '2900-01-01', 'big_rock', 0,  1, 10, 1,  TIMESTAMP '2020-08-15 00:00:00.000', null)
+,(5, 'wxs', 'weekly', 'Daily 社会', DATE '1900-01-01', DATE '2900-01-01', 'big_rock', 0,  1, 10, 1,  TIMESTAMP '2020-08-15 00:00:00.000', null)
+,(6, 'wxs', 'weekly', 'YAMAHA',        DATE '1900-01-01', DATE '2900-01-01', 'big_rock', 0,  1, 10, 1,  TIMESTAMP '2020-08-15 00:00:00.000', null)
+,(7, 'wxs', 'weekly', 'WiiSports',        DATE '1900-01-01', DATE '2900-01-01', 'sand', 0,  1, 10, 1,  TIMESTAMP '2020-08-15 00:00:00.000', null)
+,(8, 'wxs', 'weekly', 'ポケモンTV',        DATE '1900-01-01', DATE '2900-01-01', 'water', 0,  1, 10, 1,  TIMESTAMP '2020-08-15 00:00:00.000', null)
+,(9, 'wxs', 'weekly', 'Wii',        DATE '1900-01-01', DATE '2900-01-01', 'water', 0,  1, 10, 1,  TIMESTAMP '2020-08-15 00:00:00.000', null)
 ;
  
 -- big-rock gravel, sand and water 
@@ -17,14 +21,72 @@ INSERT INTO schedule_repeat_weekly( schedule_id, day_of_week, create_time, updat
 ,(1, 'FRIDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
 ,(1, 'SATURDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
 ,(1, 'SUNDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
-,(2, 'MONDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+;
+INSERT INTO schedule_repeat_weekly( schedule_id, day_of_week, create_time, update_time) values 
+(2, 'MONDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
 ,(2, 'TUESDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
 ,(2, 'WEDNESDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
 ,(2, 'THURSDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
 ,(2, 'FRIDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
 ,(2, 'SATURDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
 ,(2, 'SUNDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+;
+INSERT INTO schedule_repeat_weekly( schedule_id, day_of_week, create_time, update_time) values 
+(3, 'MONDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(3, 'TUESDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(3, 'WEDNESDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(3, 'THURSDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(3, 'FRIDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
 ,(3, 'SATURDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(3, 'SUNDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+;
+INSERT INTO schedule_repeat_weekly( schedule_id, day_of_week, create_time, update_time) values 
+(4, 'MONDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(4, 'TUESDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(4, 'WEDNESDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(4, 'THURSDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(4, 'FRIDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(4, 'SATURDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(4, 'SUNDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+;
+INSERT INTO schedule_repeat_weekly( schedule_id, day_of_week, create_time, update_time) values 
+(5, 'MONDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(5, 'TUESDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(5, 'WEDNESDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(5, 'THURSDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(5, 'FRIDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(5, 'SATURDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(5, 'SUNDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+;
+INSERT INTO schedule_repeat_weekly( schedule_id, day_of_week, create_time, update_time) values 
+(6, 'MONDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+;
+INSERT INTO schedule_repeat_weekly( schedule_id, day_of_week, create_time, update_time) values 
+(7, 'MONDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(7, 'TUESDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(7, 'WEDNESDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(7, 'THURSDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(7, 'FRIDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(7, 'SATURDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(7, 'SUNDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+;
+INSERT INTO schedule_repeat_weekly( schedule_id, day_of_week, create_time, update_time) values 
+(8, 'MONDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(8, 'TUESDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(8, 'WEDNESDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(8, 'THURSDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(8, 'FRIDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(8, 'SATURDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(8, 'SUNDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+;
+INSERT INTO schedule_repeat_weekly( schedule_id, day_of_week, create_time, update_time) values 
+(9, 'MONDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(9, 'TUESDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(9, 'WEDNESDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(9, 'THURSDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(9, 'FRIDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(9, 'SATURDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
+,(9, 'SUNDAY', TIMESTAMP '2020-08-15 00:00:00.000', NULL)
 ;
 
 
