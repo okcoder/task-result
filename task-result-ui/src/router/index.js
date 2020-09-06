@@ -19,7 +19,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/schedule',
+    path: '/schedule/:id',
     name: 'Schedule',
     component: () => import(/* webpackChunkName: "about" */ '../views/Schedule.vue')
   },

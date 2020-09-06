@@ -73,7 +73,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">save</el-button>
-        <el-button>cancle</el-button>
+        <el-button @click="onCancle">cancle</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -108,13 +108,18 @@ export default {
   methods: {
     onSubmit: async function () {
       const res = await axios.post(
-        "http://192.168.1.112:8080/schedule/6",
+        "http://192.168.1.112:8080/schedule/" + this.$route.params.id,
         this.schedule
       );
       alert(JSON.stringify(res));
     },
+    onCancle: async function () {
+      this.$router.go(-1);
+    },
     refresh: async function () {
-      const res = await axios.get("http://192.168.1.112:8080/schedule/6");
+      const res = await axios.get(
+        "http://192.168.1.112:8080/schedule/" + this.$route.params.id
+      );
       this.schedule = res.data;
     },
   },

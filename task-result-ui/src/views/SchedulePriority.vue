@@ -11,6 +11,11 @@
         <el-card class="box-card" v-for="schedule in schedules" :key="schedule.id" shadow="hover">
           <div slot="header" class="clearfix">
             <span>{{schedule.name}}</span>
+            <el-button
+              style="float: right; padding: 3px 0"
+              @click="onEditSchedule(schedule.id)"
+              type="text"
+            >edit</el-button>
           </div>
           <div>estimatePrepareTime: {{Math.floor(schedule.estimatePrepareTime/60)}}:{{schedule.estimatePrepareTime%60}}</div>
           <div>estimateTime: {{Math.floor(schedule.estimateTime/60)}}:{{schedule.estimateTime%60}}</div>
@@ -46,6 +51,9 @@ export default {
   },
   computed: {},
   methods: {
+    onEditSchedule: function (id) {
+      this.$router.push({ path: `/schedule/${id}` });
+    },
     onSubmit: async function () {
       const res = await axios.post(
         "http://192.168.1.112:8080/schedule/6",
