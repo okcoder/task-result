@@ -11,15 +11,31 @@ import org.springframework.beans.BeanUtils;
 public class ScheduleDetailDto extends Schedule {
 
 	private String[] repeats = new String[0];
-	private DayOfWeek[] repeatOptions = DayOfWeek.values();
-	private PriorityType[] priorityTypeOptions = PriorityType.values();
+	private DayOfWeek[] repeatOptions;
+	private PriorityType[] priorityTypeOptions;
 
 	public ScheduleDetailDto() {
 	}
 
+	public ScheduleDetailDto(Schedule schedule, List<ScheduleRepeatWeekly> repeats, boolean includeOptions) {
+		if (schedule != null) {
+			BeanUtils.copyProperties(schedule, this);
+		}
+		if (repeats != null) {
+			this.setRepeatsInfo(repeats);
+		}
+		if (includeOptions) {
+			repeatOptions = DayOfWeek.values();
+			priorityTypeOptions = PriorityType.values();
+		}
+	}
+
+	private void setRepeatsInfo(List<ScheduleRepeatWeekly> repeats) {
+		this.repeats = repeats.stream().map(repeat -> repeat.getDayOfWeek()).toArray(n -> new String[n]);
+	}
+
 	public ScheduleDetailDto(Schedule schedule, List<ScheduleRepeatWeekly> repeats) {
-		BeanUtils.copyProperties(schedule, this);
-		this.setRepeats(repeats);
+		this(schedule, repeats, false);
 	}
 
 	public String[] getRepeats() {
@@ -27,8 +43,8 @@ public class ScheduleDetailDto extends Schedule {
 
 	}
 
-	public void setRepeats(List<ScheduleRepeatWeekly> repeats) {
-		this.repeats = repeats.stream().map(repeat -> repeat.getDayOfWeek()).toArray(n -> new String[n]);
+	public void setRepeats(String[] repeats) {
+		this.repeats = repeats;
 	}
 
 	public DayOfWeek[] getRepeatOptions() {
