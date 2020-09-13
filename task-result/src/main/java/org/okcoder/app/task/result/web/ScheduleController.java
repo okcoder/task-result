@@ -34,6 +34,12 @@ public class ScheduleController {
 	public Map<String, List<ScheduleDetailDto>> getSchedules() {
 		return scheduleService.getSchedules(userId);
 	}
+	@PostMapping("")
+	@CrossOrigin
+	public void savePriority( @RequestBody Map<String, List<ScheduleDetailDto>> schedules) {
+		logger.info("{}", schedules);
+		this.scheduleService.savePriority(schedules);
+	}
 
 	@GetMapping("/{scheduleId}")
 	@CrossOrigin
