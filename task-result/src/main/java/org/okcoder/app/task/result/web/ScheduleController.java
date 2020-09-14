@@ -34,6 +34,7 @@ public class ScheduleController {
 	public Map<String, List<ScheduleDetailDto>> getSchedules() {
 		return scheduleService.getSchedules(userId);
 	}
+	
 	@PostMapping("")
 	@CrossOrigin
 	public void savePriority( @RequestBody Map<String, List<ScheduleDetailDto>> schedules) {
@@ -47,6 +48,13 @@ public class ScheduleController {
 		return scheduleService.getSchedule(userId, scheduleId);
 	}
 
+	@GetMapping("/new/{priorityType}")
+	@CrossOrigin
+	public ScheduleDetailDto newSchedule(@PathVariable String priorityType) {
+		return scheduleService.newSchedule(userId, priorityType);
+	}
+
+	
 	@PostMapping("/{scheduleId}")
 	@CrossOrigin
 	public void save(@PathVariable String scheduleId, @RequestBody ScheduleDetailDto schedule) {

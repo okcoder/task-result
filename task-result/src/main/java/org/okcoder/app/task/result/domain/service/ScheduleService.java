@@ -45,7 +45,7 @@ public class ScheduleService {
 			return new ScheduleDetailDto(schedule, repeats);
 		}).collect(Collectors.groupingBy(ScheduleDetailDto::getPriorityType, Collectors.toList()));
 
-		//SORT
+		// SORT
 		list.forEach((k, v) -> v.sort((a, b) -> a.getPriorityIndex() - b.getPriorityIndex()));
 
 		// add priorityType without schedule
@@ -57,18 +57,20 @@ public class ScheduleService {
 		return list;
 	}
 
+	public ScheduleDetailDto newSchedule(String userId, String priorityType) {
+		ScheduleDetailDto detail = null;
+		detail = new ScheduleDetailDto(null, null, true);
+		detail.setUserId(userId);
+		detail.setPriorityType(PriorityType.valueOf(priorityType).name());
+		detail.setRepeatType(RepeatType.weekly.name());
+		detail.setPriorityIndex(0);
+		detail.setCreateTime(LocalDateTime.now());// FIXME CREATE_TIME
+		return detail;
+	}
+
 	public ScheduleDetailDto getSchedule(String userId, String scheduleId) {
 
 		ScheduleDetailDto detail = null;
-		if ("NEW".equalsIgnoreCase(scheduleId)) {
-			detail = new ScheduleDetailDto(null, null, true);
-			detail.setUserId(userId);
-			detail.setPriorityType(PriorityType.water.name());// FIXME
-			detail.setRepeatType(RepeatType.weekly.name());
-			detail.setPriorityIndex(0);
-			detail.setCreateTime(LocalDateTime.now());// FIXME CREATE_TIME
-			return detail;
-		}
 
 		Optional<Schedule> schedule = scheduleMapper.selectByPrimaryKey(scheduleId);
 		if (schedule.isPresent()) {

@@ -6,7 +6,11 @@
       :class="priorityType"
       v-for="(schedules,priorityType) in priorityTypes"
     >
-      <div class="priority_title">{{priorityType}}</div>
+      <div class="priority_title">
+        {{priorityType}}
+        <br />
+        <i class="el-icon-circle-plus-outline" @click="onAddSchedule(priorityType)"></i>
+      </div>
       <draggable :options="options" group="priorityTypes" :list="schedules" @end="onDragEnd">
         <el-card class="box-card" v-for="schedule in schedules" :key="schedule.id" shadow="hover">
           <div slot="header" class="clearfix" @click="onSelectedSchedule(schedule)">
@@ -71,6 +75,12 @@ export default {
     },
     onSelectedSchedule: function (schedule) {
       this.schedule = schedule;
+    },
+    onAddSchedule: function (priorityType) {
+      this.$router.push({
+        path: `/schedule/new`,
+        query: { priorityType: priorityType },
+      });
     },
     onSubmit: async function () {
       const res = await axios.post(

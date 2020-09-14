@@ -117,9 +117,13 @@ export default {
       this.$router.go(-1);
     },
     refresh: async function () {
-      const res = await axios.get(
-        "http://192.168.1.112:8080/schedule/" + this.$route.params.id
-      );
+      let url = "http://192.168.1.112:8080/schedule/";
+      if (this.$route.params.id == "new") {
+        url = url + "new/" + this.$route.query.priorityType;
+      } else {
+        url = url + this.$route.params.id;
+      }
+      const res = await axios.get(url);
       this.schedule = res.data;
     },
   },
