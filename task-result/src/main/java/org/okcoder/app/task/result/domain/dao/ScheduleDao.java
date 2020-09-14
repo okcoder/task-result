@@ -1,13 +1,17 @@
 package org.okcoder.app.task.result.domain.dao;
 
 import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
+import static org.mybatis.dynamic.sql.SqlBuilder.isGreaterThanOrEqualTo;
+import static org.mybatis.dynamic.sql.SqlBuilder.isLessThanOrEqualTo;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import org.mybatis.dynamic.sql.select.join.EqualTo;
 import org.okcoder.app.task.result.domain.entity.Schedule;
 import org.okcoder.app.task.result.domain.entity.ScheduleRepeatWeekly;
 import org.okcoder.app.task.result.domain.repository.ScheduleDynamicSqlSupport;
@@ -33,6 +37,17 @@ public class ScheduleDao {
 				.select(c -> c.where(ScheduleDynamicSqlSupport.userId, isEqualTo(userId))
 						.orderBy(ScheduleDynamicSqlSupport.priorityIndex));
 		return schedules;
+	}
+
+	public List<Schedule> getSchedules(String userId, LocalDate day) {
+		List<Schedule> list = scheduleMapper
+				.select(c -> c.join(ScheduleRepeatWeeklyDynamicSqlSupport.scheduleRepeatWeekly)
+						.on(ScheduleDynamicSqlSupport.id, new EqualTo(ScheduleRepeatWeeklyDynamicSqlSupport.scheduleId))
+						.where(ScheduleDynamicSqlSupport.userId, isEqualTo(userId))//
+						.and(ScheduleDynamicSqlSupport.startDay, isLessThanOrEqualTo(day))//
+						.and(ScheduleDynamicSqlSupport.finishDay, isGreaterThanOrEqualTo(day))
+						.and(ScheduleRepeatWeeklyDynamicSqlSupport.dayOfWeek, isEqualTo(day.getDayOfWeek().name())));
+		return list;
 	}
 
 	public List<ScheduleRepeatWeekly> getRepeat(String scheduleId) {

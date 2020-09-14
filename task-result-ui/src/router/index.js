@@ -27,6 +27,11 @@ const routes = [
     path: '/schedulePriority',
     name: 'SchedulePriority',
     component: () => import(/* webpackChunkName: "about" */ '../views/SchedulePriority.vue')
+  },
+  {
+    path: '/taskPriority',
+    name: 'TaskPriority',
+    component: () => import(/* webpackChunkName: "about" */ '../views/TaskPriority.vue')
   }
 
 ]
