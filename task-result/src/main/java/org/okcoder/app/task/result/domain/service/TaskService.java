@@ -8,9 +8,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import org.mybatis.dynamic.sql.select.join.EqualTo;
@@ -104,6 +106,23 @@ public class TaskService {
 
 		return list;
 
+	}
+
+	public void savePriority(Map<String, List<Task>> tasks) {
+		tasks.forEach((k, v) -> {
+			IntStream.range(0, v.size()).filter(i -> {
+				Task task = v.get(i);
+				return !Objects.equals(task.getPriorityType(), k) || task.getPriorityIndex() != i;
+			}).forEach(i -> {
+				Task task = v.get(i);
+				task.setPriorityType(k);
+				task.setPriorityIndex(i);
+				this.taskMapper.updateByPrimaryKey(task);
+			});
+		});
+
+		// TODO Auto-generated method stub
+		
 	}
 
 }
