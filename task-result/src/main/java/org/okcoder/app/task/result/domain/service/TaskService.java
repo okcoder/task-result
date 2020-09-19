@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -19,6 +20,7 @@ import org.mybatis.dynamic.sql.select.join.EqualTo;
 import org.okcoder.app.task.result.domain.PriorityType;
 import org.okcoder.app.task.result.domain.dao.ScheduleDao;
 import org.okcoder.app.task.result.domain.dao.TaskDao;
+import org.okcoder.app.task.result.domain.dto.TaskDetailDto;
 import org.okcoder.app.task.result.domain.entity.Schedule;
 import org.okcoder.app.task.result.domain.entity.Task;
 import org.okcoder.app.task.result.domain.repository.ScheduleDynamicSqlSupport;
@@ -121,8 +123,26 @@ public class TaskService {
 			});
 		});
 
-		// TODO Auto-generated method stub
-		
+	}
+
+	public TaskDetailDto getTask(String userId, String taskId) {
+
+		TaskDetailDto detail = null;
+
+		Optional<Task> task = taskMapper.selectByPrimaryKey(taskId);
+		if (task.isPresent()) {
+			detail = new TaskDetailDto(task.get(), true);
+		}
+
+		return detail;
+	}
+
+	public void save(String taskId, TaskDetailDto task) {
+		Task entity = new Task();
+		BeanUtils.copyProperties(task, entity);
+
+		this.taskMapper.insertOrUpdate(entity);
+
 	}
 
 }

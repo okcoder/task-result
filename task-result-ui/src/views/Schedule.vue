@@ -1,6 +1,9 @@
 <template>
   <div>
     <el-form ref="schedule" :model="schedule" label-width="180px" style="text-align: left;">
+      <el-form-item label="category">
+        <el-input v-model="schedule.category"></el-input>
+      </el-form-item>
       <el-form-item label="name">
         <el-input v-model="schedule.name"></el-input>
       </el-form-item>
@@ -71,6 +74,27 @@
           :span="2"
         >{{Math.floor(schedule.estimateCloseTime/60)}} Hour {{schedule.estimateCloseTime%60}} Min</el-col>
       </el-form-item>
+
+      <el-form-item label="task time">
+        <el-col :span="4">
+          <el-time-select
+            placeholder="start time"
+            v-model="schedule.startTime"
+            style="width: 100%;"
+            :picker-options="{start: '07:00',step: '00:15',end: '22:00'}"
+          ></el-time-select>
+        </el-col>
+        <el-col class="line" :span="1" style="text-align: center;">-</el-col>
+        <el-col :span="4">
+          <el-time-select
+            placeholder="finish time"
+            v-model="schedule.finishTime"
+            style="width: 100%;"
+            :picker-options="{start: '07:00',step: '00:15',end: '22:00'}"
+          ></el-time-select>
+        </el-col>
+      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" @click="onSubmit">save</el-button>
         <el-button @click="onCancle">cancle</el-button>

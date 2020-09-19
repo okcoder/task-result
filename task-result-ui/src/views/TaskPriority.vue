@@ -1,46 +1,56 @@
 <template>
   <el-row class="priority_type">
     <el-col
-      :span="4"
+      :span="3"
       :key="priorityType"
       :class="priorityType"
       v-for="(tasks,priorityType) in priorityTypes"
     >
-      <div class="priority_title">
-        {{priorityType}}
-        <br />
-        <i class="el-icon-circle-plus-outline" @click="onAddTask(priorityType)"></i>
-      </div>
+      <div class="priority_title">{{priorityType}}</div>
       <draggable :options="options" group="priorityTypes" :list="tasks" @end="onDragEnd">
-        <el-card class="box-card" v-for="task in tasks" :key="task.id" shadow="hover">
-          <div slot="header" class="clearfix" @click="onSelectedTask(task)">
+        <el-card
+          class="box-card"
+          v-for="task in tasks"
+          :key="task.id"
+          shadow="hover"
+          :body-style="{padding:'5px'}"
+        >
+          <div @click="onSelectedTask(task)">
             <span>{{task.title}}</span>
-            <el-button
-              style="float: right; padding: 3px 0"
-              @click="onEditTask(task.id)"
-              type="text"
-            >edit</el-button>
           </div>
-          <div>subTitle: {{task.subTitle}}</div>
         </el-card>
       </draggable>
     </el-col>
-    <el-col :span="6">
+    <el-col :span="10">
       <div class="priority_title">
         <h1>detail</h1>
       </div>
       <el-card class="box-card" shadow="hover" v-show="task.id !== undefined">
         <div slot="header" class="clearfix">
-          <span>{{task.title}}</span>
-          <el-button
-            style="float: right; padding: 3px 0"
-            @click="onEditTask(task.id)"
-            type="text"
-          >edit</el-button>
+          <span>{{task.title}}({{task.category}})</span>
+          <el-input v-model="task.subTitle" @change="onChangedTask(task.id)"></el-input>
         </div>
-        <div>estimatePrepareTime: {{Math.floor(task.estimatePrepareTime/60)}}:{{task.estimatePrepareTime%60}}</div>
-        <div>estimateTime: {{Math.floor(task.estimateTime/60)}}:{{task.estimateTime%60}}</div>
-        <div>estimateCloseTime: {{Math.floor(task.estimateCloseTime/60)}}:{{task.estimateCloseTime%60}}</div>
+        <div>
+          <div>Prepare</div>
+          estimateTime: {{Math.floor(task.estimatePrepareTime/60)}}:{{task.estimatePrepareTime%60}}
+          <el-button type="primary" plain>start</el-button>
+          <el-button type="success" plain>finish</el-button>
+        </div>
+        <el-divider></el-divider>
+        <div>
+          <div>work</div>
+          <div>work time: {{task.startTime}} ~ {{task.finishTime}}</div>
+          estimateTime: {{Math.floor(task.estimateTime/60)}}:{{task.estimateTime%60}}
+          <el-button type="warning" round>start</el-button>
+          <el-button type="success" round>finish</el-button>
+        </div>
+        <el-divider></el-divider>
+        <div>
+          <div>Close</div>
+          estimateTime: {{Math.floor(task.estimateCloseTime/60)}}:{{task.estimateCloseTime%60}}
+          <el-button type="primary">start</el-button>
+          <el-button type="success">finish</el-button>
+        </div>
       </el-card>
     </el-col>
   </el-row>
@@ -71,24 +81,22 @@ export default {
   },
   computed: {},
   methods: {
-    onEditTask: function (id) {
-      this.$router.push({ path: `/task/${id}` });
+    onChangedTask: async function (id) {
+      const res = await axios.post(
+        "http://192.168.1.112:8080/task/" + id,
+        this.task
+      );
+      console.log(res);
     },
     onSelectedTask: function (task) {
       this.task = task;
     },
-    onAddTask: function (priorityType) {
-      this.$router.push({
-        path: `/task/new`,
-        query: { priorityType: priorityType },
-      });
-    },
     refresh: async function () {
-      const res = await axios.get("http://localhost:8080/task/");
+      const res = await axios.get("http://192.168.1.112:8080/task/");
       this.priorityTypes = res.data;
     },
     onDragEnd: async function () {
-      await axios.post("http://localhost:8080/task/", this.priorityTypes);
+      await axios.post("http://192.168.1.112:8080/task/", this.priorityTypes);
     },
   },
 };
@@ -97,32 +105,34 @@ export default {
 .priority_title {
   height: 100px;
   width: 100%;
+  background-size: cover;
 }
 
 .big_rock .priority_title {
-  background: url("../assets/big_rock.png") no-repeat center center;
+  background: url("../assets/big_rock.png");
 }
 
 .gravel .priority_title {
-  background: url("../assets/gravel.png") no-repeat center center;
+  background: url("../assets/gravel.png");
 }
 
 .sand .priority_title {
-  background: url("../assets/sand.png") no-repeat center center;
+  background: url("../assets/sand.png");
 }
 
 .water .priority_title {
-  background: url("../assets/water.png") no-repeat center center;
+  background: url("../assets/water.png");
 }
 
 .box-card {
   margin: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .priority_type .el-col {
   border-width: 2px;
   border-style: dotted;
-  min-height: 100px;
   margin: 5px;
 }
 </style>
