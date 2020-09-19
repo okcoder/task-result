@@ -35,7 +35,7 @@ import org.okcoder.app.task.result.domain.entity.Task;
 @Mapper
 public interface TaskMapper {
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source Table: PUBLIC.TASK")
-    BasicColumn[] selectList = BasicColumn.columnList(id, userId, taskDay, scheduleId, title, subTitle, priorityType, priorityIndex, estimatePrepareTime, estimateTime, estimateCloseTime, createTime, updateTime);
+    BasicColumn[] selectList = BasicColumn.columnList(id, userId, taskDay, scheduleId, category, title, subTitle, priorityType, priorityIndex, estimatePrepareTime, estimateTime, estimateCloseTime, startTime, finishTime, createTime, updateTime);
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source Table: PUBLIC.TASK")
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
@@ -65,6 +65,7 @@ public interface TaskMapper {
         @Result(column="USER_ID", property="userId", jdbcType=JdbcType.VARCHAR),
         @Result(column="TASK_DAY", property="taskDay", jdbcType=JdbcType.DATE),
         @Result(column="SCHEDULE_ID", property="scheduleId", jdbcType=JdbcType.VARCHAR),
+        @Result(column="CATEGORY", property="category", jdbcType=JdbcType.VARCHAR),
         @Result(column="TITLE", property="title", jdbcType=JdbcType.VARCHAR),
         @Result(column="SUB_TITLE", property="subTitle", jdbcType=JdbcType.VARCHAR),
         @Result(column="PRIORITY_TYPE", property="priorityType", jdbcType=JdbcType.VARCHAR),
@@ -72,6 +73,8 @@ public interface TaskMapper {
         @Result(column="ESTIMATE_PREPARE_TIME", property="estimatePrepareTime", jdbcType=JdbcType.INTEGER),
         @Result(column="ESTIMATE_TIME", property="estimateTime", jdbcType=JdbcType.INTEGER),
         @Result(column="ESTIMATE_CLOSE_TIME", property="estimateCloseTime", jdbcType=JdbcType.INTEGER),
+        @Result(column="START_TIME", property="startTime", jdbcType=JdbcType.TIME),
+        @Result(column="FINISH_TIME", property="finishTime", jdbcType=JdbcType.TIME),
         @Result(column="CREATE_TIME", property="createTime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="UPDATE_TIME", property="updateTime", jdbcType=JdbcType.TIMESTAMP)
     })
@@ -115,6 +118,7 @@ public interface TaskMapper {
             .map(userId).toProperty("userId")
             .map(taskDay).toProperty("taskDay")
             .map(scheduleId).toProperty("scheduleId")
+            .map(category).toProperty("category")
             .map(title).toProperty("title")
             .map(subTitle).toProperty("subTitle")
             .map(priorityType).toProperty("priorityType")
@@ -122,6 +126,8 @@ public interface TaskMapper {
             .map(estimatePrepareTime).toProperty("estimatePrepareTime")
             .map(estimateTime).toProperty("estimateTime")
             .map(estimateCloseTime).toProperty("estimateCloseTime")
+            .map(startTime).toProperty("startTime")
+            .map(finishTime).toProperty("finishTime")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
         );
@@ -134,6 +140,7 @@ public interface TaskMapper {
             .map(userId).toProperty("userId")
             .map(taskDay).toProperty("taskDay")
             .map(scheduleId).toProperty("scheduleId")
+            .map(category).toProperty("category")
             .map(title).toProperty("title")
             .map(subTitle).toProperty("subTitle")
             .map(priorityType).toProperty("priorityType")
@@ -141,6 +148,8 @@ public interface TaskMapper {
             .map(estimatePrepareTime).toProperty("estimatePrepareTime")
             .map(estimateTime).toProperty("estimateTime")
             .map(estimateCloseTime).toProperty("estimateCloseTime")
+            .map(startTime).toProperty("startTime")
+            .map(finishTime).toProperty("finishTime")
             .map(createTime).toProperty("createTime")
             .map(updateTime).toProperty("updateTime")
         );
@@ -153,6 +162,7 @@ public interface TaskMapper {
             .map(userId).toPropertyWhenPresent("userId", record::getUserId)
             .map(taskDay).toPropertyWhenPresent("taskDay", record::getTaskDay)
             .map(scheduleId).toPropertyWhenPresent("scheduleId", record::getScheduleId)
+            .map(category).toPropertyWhenPresent("category", record::getCategory)
             .map(title).toPropertyWhenPresent("title", record::getTitle)
             .map(subTitle).toPropertyWhenPresent("subTitle", record::getSubTitle)
             .map(priorityType).toPropertyWhenPresent("priorityType", record::getPriorityType)
@@ -160,6 +170,8 @@ public interface TaskMapper {
             .map(estimatePrepareTime).toPropertyWhenPresent("estimatePrepareTime", record::getEstimatePrepareTime)
             .map(estimateTime).toPropertyWhenPresent("estimateTime", record::getEstimateTime)
             .map(estimateCloseTime).toPropertyWhenPresent("estimateCloseTime", record::getEstimateCloseTime)
+            .map(startTime).toPropertyWhenPresent("startTime", record::getStartTime)
+            .map(finishTime).toPropertyWhenPresent("finishTime", record::getFinishTime)
             .map(createTime).toPropertyWhenPresent("createTime", record::getCreateTime)
             .map(updateTime).toPropertyWhenPresent("updateTime", record::getUpdateTime)
         );
@@ -198,6 +210,7 @@ public interface TaskMapper {
                 .set(userId).equalTo(record::getUserId)
                 .set(taskDay).equalTo(record::getTaskDay)
                 .set(scheduleId).equalTo(record::getScheduleId)
+                .set(category).equalTo(record::getCategory)
                 .set(title).equalTo(record::getTitle)
                 .set(subTitle).equalTo(record::getSubTitle)
                 .set(priorityType).equalTo(record::getPriorityType)
@@ -205,6 +218,8 @@ public interface TaskMapper {
                 .set(estimatePrepareTime).equalTo(record::getEstimatePrepareTime)
                 .set(estimateTime).equalTo(record::getEstimateTime)
                 .set(estimateCloseTime).equalTo(record::getEstimateCloseTime)
+                .set(startTime).equalTo(record::getStartTime)
+                .set(finishTime).equalTo(record::getFinishTime)
                 .set(createTime).equalTo(record::getCreateTime)
                 .set(updateTime).equalTo(record::getUpdateTime);
     }
@@ -215,6 +230,7 @@ public interface TaskMapper {
                 .set(userId).equalToWhenPresent(record::getUserId)
                 .set(taskDay).equalToWhenPresent(record::getTaskDay)
                 .set(scheduleId).equalToWhenPresent(record::getScheduleId)
+                .set(category).equalToWhenPresent(record::getCategory)
                 .set(title).equalToWhenPresent(record::getTitle)
                 .set(subTitle).equalToWhenPresent(record::getSubTitle)
                 .set(priorityType).equalToWhenPresent(record::getPriorityType)
@@ -222,6 +238,8 @@ public interface TaskMapper {
                 .set(estimatePrepareTime).equalToWhenPresent(record::getEstimatePrepareTime)
                 .set(estimateTime).equalToWhenPresent(record::getEstimateTime)
                 .set(estimateCloseTime).equalToWhenPresent(record::getEstimateCloseTime)
+                .set(startTime).equalToWhenPresent(record::getStartTime)
+                .set(finishTime).equalToWhenPresent(record::getFinishTime)
                 .set(createTime).equalToWhenPresent(record::getCreateTime)
                 .set(updateTime).equalToWhenPresent(record::getUpdateTime);
     }
@@ -232,6 +250,7 @@ public interface TaskMapper {
             c.set(userId).equalTo(record::getUserId)
             .set(taskDay).equalTo(record::getTaskDay)
             .set(scheduleId).equalTo(record::getScheduleId)
+            .set(category).equalTo(record::getCategory)
             .set(title).equalTo(record::getTitle)
             .set(subTitle).equalTo(record::getSubTitle)
             .set(priorityType).equalTo(record::getPriorityType)
@@ -239,6 +258,8 @@ public interface TaskMapper {
             .set(estimatePrepareTime).equalTo(record::getEstimatePrepareTime)
             .set(estimateTime).equalTo(record::getEstimateTime)
             .set(estimateCloseTime).equalTo(record::getEstimateCloseTime)
+            .set(startTime).equalTo(record::getStartTime)
+            .set(finishTime).equalTo(record::getFinishTime)
             .set(createTime).equalTo(record::getCreateTime)
             .set(updateTime).equalTo(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))
@@ -251,6 +272,7 @@ public interface TaskMapper {
             c.set(userId).equalToWhenPresent(record::getUserId)
             .set(taskDay).equalToWhenPresent(record::getTaskDay)
             .set(scheduleId).equalToWhenPresent(record::getScheduleId)
+            .set(category).equalToWhenPresent(record::getCategory)
             .set(title).equalToWhenPresent(record::getTitle)
             .set(subTitle).equalToWhenPresent(record::getSubTitle)
             .set(priorityType).equalToWhenPresent(record::getPriorityType)
@@ -258,6 +280,8 @@ public interface TaskMapper {
             .set(estimatePrepareTime).equalToWhenPresent(record::getEstimatePrepareTime)
             .set(estimateTime).equalToWhenPresent(record::getEstimateTime)
             .set(estimateCloseTime).equalToWhenPresent(record::getEstimateCloseTime)
+            .set(startTime).equalToWhenPresent(record::getStartTime)
+            .set(finishTime).equalToWhenPresent(record::getFinishTime)
             .set(createTime).equalToWhenPresent(record::getCreateTime)
             .set(updateTime).equalToWhenPresent(record::getUpdateTime)
             .where(id, isEqualTo(record::getId))

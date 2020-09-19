@@ -3,6 +3,7 @@ package org.okcoder.app.task.result.domain.repository;
 import java.sql.JDBCType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import javax.annotation.Generated;
 import org.mybatis.dynamic.sql.SqlColumn;
 import org.mybatis.dynamic.sql.SqlTable;
@@ -22,6 +23,9 @@ public final class ScheduleDynamicSqlSupport {
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.NAME")
     public static final SqlColumn<String> name = schedule.name;
+
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.CATEGORY")
+    public static final SqlColumn<String> category = schedule.category;
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.START_DAY")
     public static final SqlColumn<LocalDate> startDay = schedule.startDay;
@@ -44,6 +48,12 @@ public final class ScheduleDynamicSqlSupport {
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.ESTIMATE_CLOSE_TIME")
     public static final SqlColumn<Integer> estimateCloseTime = schedule.estimateCloseTime;
 
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.START_TIME")
+    public static final SqlColumn<LocalTime> startTime = schedule.startTime;
+
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.FINISH_TIME")
+    public static final SqlColumn<LocalTime> finishTime = schedule.finishTime;
+
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.CREATE_TIME")
     public static final SqlColumn<LocalDateTime> createTime = schedule.createTime;
 
@@ -60,6 +70,8 @@ public final class ScheduleDynamicSqlSupport {
 
         public final SqlColumn<String> name = column("NAME", JDBCType.VARCHAR);
 
+        public final SqlColumn<String> category = column("CATEGORY", JDBCType.VARCHAR);
+
         public final SqlColumn<LocalDate> startDay = column("START_DAY", JDBCType.DATE);
 
         public final SqlColumn<LocalDate> finishDay = column("FINISH_DAY", JDBCType.DATE);
@@ -73,6 +85,10 @@ public final class ScheduleDynamicSqlSupport {
         public final SqlColumn<Integer> estimateTime = column("ESTIMATE_TIME", JDBCType.INTEGER);
 
         public final SqlColumn<Integer> estimateCloseTime = column("ESTIMATE_CLOSE_TIME", JDBCType.INTEGER);
+
+        public final SqlColumn<LocalTime> startTime = column("START_TIME", JDBCType.TIME);
+
+        public final SqlColumn<LocalTime> finishTime = column("FINISH_TIME", JDBCType.TIME);
 
         public final SqlColumn<LocalDateTime> createTime = column("CREATE_TIME", JDBCType.TIMESTAMP);
 

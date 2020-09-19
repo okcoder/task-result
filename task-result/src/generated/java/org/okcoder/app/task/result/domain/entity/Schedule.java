@@ -2,6 +2,7 @@ package org.okcoder.app.task.result.domain.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import javax.annotation.Generated;
 
 public class Schedule {
@@ -16,6 +17,9 @@ public class Schedule {
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.NAME")
     private String name;
+
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.CATEGORY")
+    private String category;
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.START_DAY")
     private LocalDate startDay;
@@ -37,6 +41,12 @@ public class Schedule {
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.ESTIMATE_CLOSE_TIME")
     private Integer estimateCloseTime;
+
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.START_TIME")
+    private LocalTime startTime;
+
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.FINISH_TIME")
+    private LocalTime finishTime;
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.CREATE_TIME")
     private LocalDateTime createTime;
@@ -82,6 +92,16 @@ public class Schedule {
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.NAME")
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.CATEGORY")
+    public String getCategory() {
+        return category;
+    }
+
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.CATEGORY")
+    public void setCategory(String category) {
+        this.category = category == null ? null : category.trim();
     }
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.START_DAY")
@@ -152,6 +172,26 @@ public class Schedule {
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.ESTIMATE_CLOSE_TIME")
     public void setEstimateCloseTime(Integer estimateCloseTime) {
         this.estimateCloseTime = estimateCloseTime;
+    }
+
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.START_TIME")
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.START_TIME")
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.FINISH_TIME")
+    public LocalTime getFinishTime() {
+        return finishTime;
+    }
+
+    @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.FINISH_TIME")
+    public void setFinishTime(LocalTime finishTime) {
+        this.finishTime = finishTime;
     }
 
     @Generated(value="org.mybatis.generator.api.MyBatisGenerator", comments="Source field: PUBLIC.SCHEDULE.CREATE_TIME")
