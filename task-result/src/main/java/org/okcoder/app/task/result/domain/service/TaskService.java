@@ -5,11 +5,11 @@ import static org.mybatis.dynamic.sql.SqlBuilder.isGreaterThanOrEqualTo;
 import static org.mybatis.dynamic.sql.SqlBuilder.isLessThanOrEqualTo;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -23,9 +23,11 @@ import org.okcoder.app.task.result.domain.dao.TaskDao;
 import org.okcoder.app.task.result.domain.dto.TaskDetailDto;
 import org.okcoder.app.task.result.domain.entity.Schedule;
 import org.okcoder.app.task.result.domain.entity.Task;
+import org.okcoder.app.task.result.domain.entity.TaskAction;
 import org.okcoder.app.task.result.domain.repository.ScheduleDynamicSqlSupport;
 import org.okcoder.app.task.result.domain.repository.ScheduleMapper;
 import org.okcoder.app.task.result.domain.repository.ScheduleRepeatWeeklyDynamicSqlSupport;
+import org.okcoder.app.task.result.domain.repository.TaskActionMapper;
 import org.okcoder.app.task.result.domain.repository.TaskDynamicSqlSupport;
 import org.okcoder.app.task.result.domain.repository.TaskMapper;
 import org.slf4j.Logger;
@@ -40,13 +42,16 @@ public class TaskService {
 
 	private ScheduleMapper scheduleMapper;
 	private TaskMapper taskMapper;
+	private TaskActionMapper taskActionMapper;
 	private TaskDao taskDao;
 	private ScheduleDao scheduleDao;
 
-	public TaskService(ScheduleMapper scheduleMapper, TaskMapper taskMapper, TaskDao taskDao, ScheduleDao scheduleDao) {
+	public TaskService(ScheduleMapper scheduleMapper, TaskMapper taskMapper, TaskActionMapper taskActionMapper,
+			TaskDao taskDao, ScheduleDao scheduleDao) {
 		super();
 		this.scheduleMapper = scheduleMapper;
 		this.taskMapper = taskMapper;
+		this.taskActionMapper = taskActionMapper;
 		this.taskDao = taskDao;
 		this.scheduleDao = scheduleDao;
 	}
@@ -77,7 +82,7 @@ public class TaskService {
 		return list;
 	}
 
-	public Map<String, List<Task>> getTasks(String userId, LocalDate day) {
+	public Map<String, List<TaskDetailDto>> getTasks(String userId, LocalDate day) {
 
 		List<Task> tasks = taskDao.getTasks(userId, day);
 		List<Schedule> schedules = this.scheduleDao.getSchedules(userId, day);
@@ -94,8 +99,17 @@ public class TaskService {
 			return task;
 		}).forEach(t -> tasks.add(t));
 
-		Map<String, List<Task>> list = tasks.stream()
-				.collect(Collectors.groupingBy(Task::getPriorityType, Collectors.toList()));
+		;
+		/*-
+		taks.forEach(task->{
+			task.setActions()
+			taskDao.getActions(task.getId());
+		});*/
+
+		Map<String, List<TaskDetailDto>> list = tasks.stream().map(task -> {
+			List<TaskAction> actions = taskDao.getActions(task.getId());
+			return new TaskDetailDto(task, actions, false);
+		}).collect(Collectors.groupingBy(TaskDetailDto::getPriorityType, Collectors.toList()));
 
 		// SORT
 		list.forEach((k, v) -> v.sort((a, b) -> a.getPriorityIndex() - b.getPriorityIndex()));
@@ -125,17 +139,18 @@ public class TaskService {
 
 	}
 
+	/*-
 	public TaskDetailDto getTask(String userId, String taskId) {
-
+	
 		TaskDetailDto detail = null;
-
+	
 		Optional<Task> task = taskMapper.selectByPrimaryKey(taskId);
 		if (task.isPresent()) {
 			detail = new TaskDetailDto(task.get(), true);
 		}
-
+	
 		return detail;
-	}
+	}*/
 
 	public void save(String taskId, TaskDetailDto task) {
 		Task entity = new Task();
@@ -143,6 +158,17 @@ public class TaskService {
 
 		this.taskMapper.insertOrUpdate(entity);
 
+	}
+
+	public List<TaskAction> addAction(String taskId, String action) {
+		TaskAction record = new TaskAction();
+		record.setTaskId(taskId);
+		record.setAction(action);
+		record.setActionTime(LocalDateTime.now());
+		record.setCreateTime(LocalDateTime.now());// FIXME
+		taskActionMapper.insert(record);
+
+		return taskDao.getActions(taskId);
 	}
 
 }

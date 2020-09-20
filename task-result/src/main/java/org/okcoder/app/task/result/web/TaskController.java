@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.okcoder.app.task.result.domain.dto.TaskDetailDto;
 import org.okcoder.app.task.result.domain.entity.Task;
+import org.okcoder.app.task.result.domain.entity.TaskAction;
 import org.okcoder.app.task.result.domain.service.TaskService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,42 +30,49 @@ public class TaskController {
 
 	private String userId = "wxs";
 
-	//@GetMapping
+	// @GetMapping
 	public String index(Model model) {
 
 		LocalDate day = LocalDate.now();
 		List<Task> list = taskService.getTask(userId, day);
-		if (list.size()==0) {
+		if (list.size() == 0) {
 			taskService.initTask(userId, day);
 			list = taskService.getTask(userId, day);
 		}
 		model.addAttribute("tasks", list);
 		return "task/index";
 	}
-	
 
 	@GetMapping("")
 	@CrossOrigin
-	public Map<String, List<Task>> getTasks() {
+	public Map<String, List<TaskDetailDto>> getTasks() {
 		LocalDate day = LocalDate.now();
 		return taskService.getTasks(userId, day);
 	}
-	
+
 	@PostMapping("")
 	@CrossOrigin
-	public void savePriority( @RequestBody Map<String, List<Task>> tasks) {
+	public void savePriority(@RequestBody Map<String, List<Task>> tasks) {
 		this.taskService.savePriority(tasks);
 	}
-	
+
+	/*-
 	@GetMapping("/{taskId}")
 	@CrossOrigin
 	public TaskDetailDto getTask(@PathVariable String taskId) {
 		return taskService.getTask(userId, taskId);
 	}
+	*/
 
 	@PostMapping("/{taskId}")
 	@CrossOrigin
 	public void save(@PathVariable String taskId, @RequestBody TaskDetailDto task) {
-		this.taskService.save( taskId,task);
+		this.taskService.save(taskId, task);
+	}
+
+	@PostMapping("/{taskId}/{action}")
+	@CrossOrigin
+	public List<TaskAction> addAction(@PathVariable String taskId, @PathVariable String action) {
+		return this.taskService.addAction(taskId, action);
 	}
 }
