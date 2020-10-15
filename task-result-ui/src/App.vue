@@ -1,15 +1,32 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>|
-      <router-link to="/taskPriority">TaskPriority</router-link>|
-      <router-link to="/schedulePriority">SchedulePriority</router-link>
+      <el-menu default-active="/" collapse="true" router="true">
+        <el-menu-item index="/">
+          <i class="el-icon-s-home"></i>
+          <span slot="title">Home</span>
+        </el-menu-item>
+        <el-submenu>
+          <template slot="title">
+            <i class="el-icon-menu"></i>
+            <span slot="title">导航一</span>
+          </template>
+          <el-menu-item index="taskPriority"> taskPriority</el-menu-item>
+          <el-menu-item index="schedulePriority">
+            schedulePriority</el-menu-item
+          >
+        </el-submenu>
+        <el-menu-item index="About">
+          <i class="el-icon-setting"></i>
+          <span slot="title">About</span>
+        </el-menu-item>
+      </el-menu>
     </div>
-    <router-view />
+    <div id="main">
+      <router-view />
+    </div>
   </div>
 </template>
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -17,18 +34,23 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  width: 100%;
+  display: table;
+  height: 100%;
+}
+#app > div {
+  display: table-cell;
 }
 
 #nav {
-  padding: 30px;
+  width: 60px;
+  border: dotted 1px #42b983;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+html {
+  height: 100%;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+body {
+  height: 100%;
+  margin: 0;
 }
 </style>
