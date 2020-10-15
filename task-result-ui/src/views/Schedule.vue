@@ -132,7 +132,7 @@ export default {
   methods: {
     onSubmit: async function () {
       const res = await axios.post(
-        "http://192.168.1.112:8080/schedule/" + this.$route.params.id,
+        "schedule/" + this.$route.params.id,
         this.schedule
       );
       alert(JSON.stringify(res));
@@ -141,7 +141,7 @@ export default {
       this.$router.go(-1);
     },
     refresh: async function () {
-      let url = "http://192.168.1.112:8080/schedule/";
+      let url = "schedule/";
       if (this.$route.params.id == "new") {
         url = url + "new/" + this.$route.query.priorityType;
       } else {

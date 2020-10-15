@@ -116,26 +116,21 @@ export default {
   },
   methods: {
     onChangedTask: async function (id) {
-      const res = await axios.post(
-        "http://192.168.1.112:8080/task/" + id,
-        this.task
-      );
+      const res = await axios.post("task/" + id, this.task);
       console.log(res);
     },
     onSelectedTask: function (task) {
       this.task = task;
     },
     refresh: async function () {
-      const res = await axios.get("http://192.168.1.112:8080/task/");
+      const res = await axios.get("task/");
       this.priorityTypes = res.data;
     },
     onDragEnd: async function () {
-      await axios.post("http://192.168.1.112:8080/task/", this.priorityTypes);
+      await axios.post("task/", this.priorityTypes);
     },
     addAction: async function (action) {
-      const res = await axios.post(
-        ["http://192.168.1.112:8080/task", this.task.id, action].join("/")
-      );
+      const res = await axios.post(["task", this.task.id, action].join("/"));
       /* if (this.task.actions === undefined) {
         this.$set(this.task, "actions", []);
       }

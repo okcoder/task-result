@@ -78,21 +78,15 @@ export default {
       });
     },
     onSubmit: async function () {
-      const res = await axios.post(
-        "http://192.168.1.112:8080/schedule/6",
-        this.schedule
-      );
+      const res = await axios.post("schedule/6", this.schedule);
       alert(JSON.stringify(res));
     },
     refresh: async function () {
-      const res = await axios.get("http://192.168.1.112:8080/schedule/");
+      const res = await axios.get("schedule/");
       this.priorityTypes = res.data;
     },
     onDragEnd: async function () {
-      await axios.post(
-        "http://192.168.1.112:8080/schedule/",
-        this.priorityTypes
-      );
+      await axios.post("schedule/", this.priorityTypes);
     },
   },
 };
