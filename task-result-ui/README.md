@@ -22,3 +22,10 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+```
+npm install --save vuex 
+npm install --save vee-validate
+npm audit fix
+```

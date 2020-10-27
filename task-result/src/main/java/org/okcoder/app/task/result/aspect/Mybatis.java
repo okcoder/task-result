@@ -32,6 +32,7 @@ public class Mybatis {
 
 	@Before("execution(* org.okcoder.app.task.result.domain.repository.*Mapper.update*(..)) && args(entity)")
 	public void beforeUpdate(JoinPoint jp, Object entity) {
+		//ReflectionUtils.findMethod()
 		// System.err.println(jp.getSignature().toString());
 		// entity.setUpdateTime(new Date());
 	}

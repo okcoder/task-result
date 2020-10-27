@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
+import Store from '@/store/index.js'
 Vue.use(VueRouter)
 
 const routes = [
@@ -32,14 +33,48 @@ const routes = [
     path: '/taskPriority',
     name: 'TaskPriority',
     component: () => import(/* webpackChunkName: "about" */ '../views/TaskPriority.vue')
+  },
+  {
+    path: '/master/userList',
+    name: 'userList',
+    component: () => import(/* webpackChunkName: "about" */ '../views/master/UserList.vue'),
+  },
+  {
+    path: '/master/userDetail',
+    name: 'userDetail',
+    component: () => import(/* webpackChunkName: "about" */ '../views/master/UserDetail.vue'),
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue'),
+    meta: {
+      isPublic: true
+    }
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Logout.vue'),
+    meta: {
+      isPublic: true
+    }
   }
-
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(page => page.meta.isPublic) || Store.state.auth.token) {
+    next()
+  } else {
+    //next()
+    next('/login')
+  }
 })
 
 export default router
